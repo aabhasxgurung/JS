@@ -5,7 +5,6 @@ const startCells = [
     "", "", "", "", "", "", "", "", ""
 ]
 
-
 let go = "circle"
 infoDisplay.textContent = "Circle goes first"
 
@@ -19,9 +18,7 @@ function createBoard() {
     })
 }
 
-
 createBoard()
-
 
 function addGo(e) {
     const goDisplay = document.createElement('div')
@@ -30,6 +27,7 @@ function addGo(e) {
     go = go === "circle" ? "cross" : "circle"
     infoDisplay.textContent = "It is now " + go + "'s go"
     e.target.removeEventListener("click", addGo)
+    checkScore()
 }
 
 function checkScore() {
@@ -40,5 +38,25 @@ function checkScore() {
         [0, 4, 8], [2, 4, 6]
     ]
 
-    winningCombos.forEach(array =>)
+    winningCombos.forEach(array => {
+        const circleWins = array.every(cell =>
+            allSquares[cell].firstChild?.classList.contains('circle'))
+
+        if (circleWins) {
+            infoDisplay.textContent = "Circle wins"
+            allSquares.forEach(square => square.replaceWith(square.cloneNode(true)))
+            return
+        }
+    })
+
+    winningCombos.forEach(array => {
+        const crossWins = array.every(cell =>
+            allSquares[cell].firstChild?.classList.contains('cross'))
+
+        if (crossWins) {
+            infoDisplay.textContent = "Cross wins"
+            allSquares.forEach(square => square.replaceWith(square.cloneNode(true)))
+            return
+        }
+    })
 }
